@@ -7,6 +7,7 @@
     <title>Document</title>
   </head>
   <body>
+    <header></header>
     <main>
       <div id="chatbot_response_container">
         <textarea
@@ -23,50 +24,43 @@
           class="text_area_default"
           placeholder="digite algo aqui"
         ></textarea>
-        <input type="button" value="send_data" id="send_data" />
+        <form id="chat-form">
+          <button type="submit" id="send_data">Send</button>
+        </form>
       </div>
     </main>
-    <h1>Chat with Gemini</h1>
-    <form id="chat-form">
-        <input type="text" id="message" placeholder="Type your message..." required style="width: 80%;">
-        <button type="submit">Send</button>
-    </form>
-    
-    <h3>Response:</h3>
-    <div id="response">...</div>
 
     <script>
-        const form = document.getElementById('chat-form');
-        const messageInput = document.getElementById('message');
-        const responseDiv = document.getElementById('response');
+      const form = document.getElementById("chat-form");
+      const messageInput = document.getElementById("user_input");
+      const responseDiv = document.getElementById("chatbot_output");
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const message = messageInput.value;
-            responseDiv.textContent = 'Thinking...';
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const message = messageInput.value;
+        responseDiv.textContent = "Thinking...";
 
-            try {
-                const res = await fetch('/chat', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ message: message }),
-                });
+        try {
+          const res = await fetch("/chat", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ message: message }),
+          });
 
-                if (!res.ok) {
-                    throw new Error('Something went wrong on the server.');
-                }
+          if (!res.ok) {
+            throw new Error("Something went wrong on the server.");
+          }
 
-                const data = await res.json();
-                responseDiv.textContent = data.response;
+          const data = await res.json();
+          responseDiv.textContent = data.response;
+        } catch (error) {
+          responseDiv.textContent = "Error: " + error.message;
+        }
 
-            } catch (error) {
-                responseDiv.textContent = 'Error: ' + error.message;
-            }
-
-            messageInput.value = ''; // Clear input field
-        });
+        messageInput.value = ""; // Clear input field
+      });
     </script>
   </body>
 </html>
