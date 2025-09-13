@@ -7,7 +7,7 @@
     <title>Document</title>
   </head>
   <body>
-    <header></header>
+    <header>aaaaa</header>
     <main>
       <div id="chatbot_response_container">
         <textarea
@@ -35,6 +35,8 @@
       const messageInput = document.getElementById("user_input");
       const responseDiv = document.getElementById("chatbot_output");
 
+      messageInput.focus();
+
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const message = messageInput.value;
@@ -56,7 +58,7 @@
           const data = await res.json();
           responseDiv.textContent = data.response;
         } catch (error) {
-          responseDiv.textContent = "Error: " + error.message;
+          responseDiv.textContent = `Error: ${error.message}`;
         }
 
         messageInput.value = ""; // Clear input field
