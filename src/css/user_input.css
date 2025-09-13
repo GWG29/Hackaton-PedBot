@@ -1,0 +1,50 @@
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  --DEFAULT_RESPONSE_PADDING: 1em;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+.text_area_default {
+  resize: none;
+  outline: none;
+}
+
+#chatbot_response_container {
+  padding: var(--DEFAULT_RESPONSE_PADDING) 0 cavar(--DEFAULT_RESPONSE_PADDING) 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#chatbot_output {
+  height: 100%;
+  width: 50%;
+}
+
+#user_input_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#send_data {
+  padding: 0.5em;
+  margin-left: 0.25rem;
+}
+
+#user_input {
+  border-radius: 5px;
+  padding: 2em;
+  width: 50%;
+}
