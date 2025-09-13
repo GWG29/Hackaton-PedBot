@@ -26,5 +26,47 @@
         <input type="button" value="send_data" id="send_data" />
       </div>
     </main>
+    <h1>Chat with Gemini</h1>
+    <form id="chat-form">
+        <input type="text" id="message" placeholder="Type your message..." required style="width: 80%;">
+        <button type="submit">Send</button>
+    </form>
+    
+    <h3>Response:</h3>
+    <div id="response">...</div>
+
+    <script>
+        const form = document.getElementById('chat-form');
+        const messageInput = document.getElementById('message');
+        const responseDiv = document.getElementById('response');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const message = messageInput.value;
+            responseDiv.textContent = 'Thinking...';
+
+            try {
+                const res = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message }),
+                });
+
+                if (!res.ok) {
+                    throw new Error('Something went wrong on the server.');
+                }
+
+                const data = await res.json();
+                responseDiv.textContent = data.response;
+
+            } catch (error) {
+                responseDiv.textContent = 'Error: ' + error.message;
+            }
+
+            messageInput.value = ''; // Clear input field
+        });
+    </script>
   </body>
 </html>
